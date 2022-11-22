@@ -118,7 +118,7 @@ class DashBoard extends StatelessWidget {
                     backgroundColor: Colors.white,
                     radius: 70,
                     child: Icon(
-                      Icons.feed_outlined,
+                      Icons.account_circle_sharp,
                       size: 60,
                     ),
                   ),
@@ -138,7 +138,7 @@ class DashBoard extends StatelessWidget {
               ),
               const Center(
                 child: Padding(
-                  padding: EdgeInsets.only(top: 300, left: 190, right: 5),
+                  padding: EdgeInsets.only(top: 300, left: 190, right: 20),
                   child: Text(
                     "Profile",
                     style: TextStyle(
@@ -169,7 +169,7 @@ class DashBoard extends StatelessWidget {
             label: 'View Catlog',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.feed_outlined),
+            icon: Icon(Icons.account_circle_sharp),
             label: 'Profile',
           ),
         ],

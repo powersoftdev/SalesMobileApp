@@ -1,10 +1,12 @@
 // ignore: file_names
+// ignore_for_file: prefer_final_fields, prefer_is_empty
+
 import 'package:flutter/material.dart';
 import '../Model/Products.dart';
 
 class MyStore extends ChangeNotifier {
   List<Product> _products = [];
-  final List<Product> _baskets = [];
+  List<Product> _baskets = [];
   Product _activeProduct = Product();
 
 //constructor to initialize the variables
@@ -12,56 +14,56 @@ class MyStore extends ChangeNotifier {
     _products = [
       Product(
           id: 1,
-          qty: 0,
+          qty: 1,
           name: 'The Nation',
           price: 125,
           pic: 'https://library.sacredheart.edu/c.php?g=29769&p=185755',
           totalPrice: 0),
       Product(
           id: 2,
-          qty: 0,
+          qty: 1,
           name: 'Saturday Nation',
           price: 100,
           pic: 'https://library.sacredheart.edu/c.php?g=29769&p=185755',
           totalPrice: 0),
       Product(
           id: 3,
-          qty: 0,
+          qty: 1,
           name: 'Spoty Life',
           price: 115,
           pic: 'https://library.sacredheart.edu/c.php?g=29769&p=185755',
           totalPrice: 0),
       Product(
           id: 4,
-          qty: 0,
+          qty: 1,
           name: 'Gbelegbo',
           price: 110,
           pic: 'https://library.sacredheart.edu/c.php?g=29769&p=185755',
           totalPrice: 0),
       Product(
           id: 5,
-          qty: 0,
+          qty: 1,
           name: 'Alaroye',
           price: 50,
           pic: 'https://library.sacredheart.edu/c.php?g=29769&p=185755',
           totalPrice: 0),
       Product(
           id: 6,
-          qty: 0,
+          qty: 1,
           name: 'Ovation',
           price: 500,
           pic: 'https://library.sacredheart.edu/c.php?g=29769&p=185755',
           totalPrice: 0),
       Product(
           id: 7,
-          qty: 0,
+          qty: 1,
           name: 'Item 7',
           price: 150,
           pic: 'https://library.sacredheart.edu/c.php?g=29769&p=185755',
           totalPrice: 0),
       Product(
           id: 8,
-          qty: 0,
+          qty: 1,
           name: 'Item 8',
           price: 120,
           pic: 'https://library.sacredheart.edu/c.php?g=29769&p=185755',
@@ -79,8 +81,32 @@ class MyStore extends ChangeNotifier {
     _activeProduct = p;
   }
 
+  increaseItemQuantity(int? quantity, Product p) {
+    if (_baskets.length > 0) {
+      var foundItem =
+          _baskets.firstWhere((a) => a.id == p.id, orElse: () => Product());
+      Product found = Product();
+      if (foundItem.id != null) {
+        found = _baskets.firstWhere((a) => a.id == p.id);
+      }
+      if (found.id != null) {
+        found.qty = found.qty == null ? 0 : quantity!;
+        found.totalPrice = found.qty! * found.price!;
+      } else {
+        p.qty = p.qty == null ? 0 : quantity!;
+        p.totalPrice = p.qty! * p.price!;
+        _baskets.add(p);
+      }
+    } else {
+      p.qty = p.qty == null ? 0 : quantity!;
+      p.totalPrice = p.qty! * p.price!;
+      _baskets.add(p);
+    }
+    notifyListeners();
+  }
+
   addOneItemToBasket(Product p) {
-    if (_baskets.isNotEmpty) {
+    if (_baskets.length > 0) {
       var foundItem =
           _baskets.firstWhere((a) => a.id == p.id, orElse: () => Product());
 
@@ -103,7 +129,7 @@ class MyStore extends ChangeNotifier {
   }
 
   removeOneItemFromBasket(Product p) {
-    if (_baskets.isNotEmpty) {
+    if (_baskets.length > 0) {
       var foundItem =
           _baskets.firstWhere((a) => a.id == p.id, orElse: () => Product());
 

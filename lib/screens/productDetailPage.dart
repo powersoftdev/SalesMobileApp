@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:sales_order/Store/MyStore.dart';
+
+import '../Store/MyStore.dart';
 import 'basketPage.dart';
 
 class ProductDetailpage extends StatefulWidget {
@@ -15,13 +16,31 @@ class ProductDetailpage extends StatefulWidget {
 }
 
 class _ProductDetailpageState extends State<ProductDetailpage> {
-  final TextEditingController _date = TextEditingController();
+  final _date = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var store = Provider.of<MyStore>(context);
+    String qtyStr = store.activeProduct!.qty.toString();
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      // appBar: AppBar(
+      //   title: Text('Product Details'),
+      //   actions: [
+      //     IconButton(
+      //       icon: Icon(Icons.shopping_cart),
+      //       onPressed: () {
+      //         Navigator.push(context,
+      //             MaterialPageRoute(builder: (context) => BasketPage()));
+      //       },
+      //       iconSize: 40,
+      //     ),
+      //     Text(
+      //       store.getBasketQty().toString(),
+      //       style: TextStyle(color: Colors.red),
+      //     ),
+      //   ],
+      // ),
       body: Container(
         color: Color(0xFF737373),
         child: Container(
@@ -80,8 +99,7 @@ class _ProductDetailpageState extends State<ProductDetailpage> {
                   fillColor: Colors.white,
                   filled: true,
                   border: const OutlineInputBorder(),
-                  // icon:
-                  //     Icon(Icons.calendar_today_rounded),
+                  suffixIcon: Icon(Icons.calendar_today_rounded),
                   labelText: 'Select Preferred Delivery Date:',
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(width: 2, color: Colors.blueAccent),
@@ -110,12 +128,6 @@ class _ProductDetailpageState extends State<ProductDetailpage> {
               ),
               Container(
                 width: 200,
-                // padding: EdgeInsets.only(left: 15),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey,
-                  ),
-                ),
                 child: Row(
                   children: [
                     IconButton(
@@ -132,8 +144,20 @@ class _ProductDetailpageState extends State<ProductDetailpage> {
                     Container(
                       height: 25,
                       width: 40,
-                      child: Text(
-                        store.activeProduct!.qty.toString(),
+                      child: TextFormField(
+                        // controller: _date,
+                        controller: TextEditingController()
+                          ..text = qtyStr
+                          ..selection =
+                              TextSelection.collapsed(offset: qtyStr.length),
+                        onChanged: (text) {
+                          store.increaseItemQuantity(
+                              (int.tryParse(text) ?? 0), store.activeProduct!);
+                        },
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                        // onChanged: (text) {},
                       ),
                     ),
                     SizedBox(
@@ -158,11 +182,11 @@ class _ProductDetailpageState extends State<ProductDetailpage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
+                    backgroundColor: Colors.blue[300],
                     fixedSize: const Size(
                       350,
                       45,
-                    ),
-                    primary: Colors.blue[300]),
+                    )),
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => BasketPage()));
@@ -177,11 +201,11 @@ class _ProductDetailpageState extends State<ProductDetailpage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
+                  backgroundColor: Colors.blue[300],
                   fixedSize: const Size(
                     350,
                     45,
                   ),
-                  primary: Colors.blue[300],
                 ),
                 onPressed: () {},
                 //Navigate to the checkout page
@@ -195,11 +219,11 @@ class _ProductDetailpageState extends State<ProductDetailpage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
+                  backgroundColor: Colors.red[300],
                   fixedSize: const Size(
                     350,
                     45,
                   ),
-                  primary: Colors.red[300],
                 ),
                 onPressed: () {
                   Navigator.pop(context);

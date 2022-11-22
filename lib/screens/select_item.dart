@@ -16,6 +16,9 @@ class SelectItemScreen extends StatefulWidget {
 }
 
 class _SelectItemScreenState extends State<SelectItemScreen> {
+  // ignore: prefer_final_fields
+  TextEditingController? _textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     //register for thr listener to listen for any notifications
@@ -25,6 +28,34 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
       appBar: AppBar(
         title: Center(
           child: Text('Catlog'),
+        ),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(50),
+          child: Container(
+            padding: EdgeInsets.only(left: 15),
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.blue[50],
+            ),
+            child: TextField(
+              onChanged: ((value) {
+                setState(
+                  () {},
+                );
+              }),
+              controller: _textEditingController,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                // contentPadding: EdgeInsets.all(5),
+                hintText: 'Search Items',
+                icon: Icon(
+                  Icons.search,
+                  size: 32,
+                ),
+                suffixIcon: Icon(Icons.close),
+              ),
+            ),
+          ),
         ),
         actions: [
           IconButton(
@@ -58,7 +89,11 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.feed_outlined),
+            icon: Icon(Icons.local_offer_outlined),
+            label: 'View Catlog',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_sharp),
             label: 'Profile',
           ),
         ],
@@ -72,9 +107,19 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
               break;
             default:
           }
-
           switch (index) {
             case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SelectItemScreen()),
+              );
+              break;
+            default:
+          }
+
+          switch (index) {
+            case 2:
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const LoginScreen()),
@@ -107,7 +152,8 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
                 showModalBottomSheet<void>(
                   context: context,
                   isScrollControlled: true,
-                  builder: (context) => SizedBox(
+                  // ignore: sized_box_for_whitespace
+                  builder: (context) => Container(
                     height: 500,
                     child: _popupProductDetails(),
                   ),

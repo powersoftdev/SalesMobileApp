@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
-// import 'package:flutter_animated_button/flutter_animated_button.dart';
 
 import 'package:sales_order/screens/size_config.dart';
 
