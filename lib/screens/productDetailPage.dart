@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:number_inc_dec/number_inc_dec.dart';
+
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:sales_order/Store/MyStore.dart';
@@ -15,30 +15,13 @@ class ProductDetailpage extends StatefulWidget {
 }
 
 class _ProductDetailpageState extends State<ProductDetailpage> {
-  TextEditingController _date = TextEditingController();
+  final TextEditingController _date = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var store = Provider.of<MyStore>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      // appBar: AppBar(
-      //   title: Text('Product Details'),
-      //   actions: [
-      //     IconButton(
-      //       icon: Icon(Icons.shopping_cart),
-      //       onPressed: () {
-      //         Navigator.push(context,
-      //             MaterialPageRoute(builder: (context) => BasketPage()));
-      //       },
-      //       iconSize: 40,
-      //     ),
-      //     Text(
-      //       store.getBasketQty().toString(),
-      //       style: TextStyle(color: Colors.red),
-      //     ),
-      //   ],
-      // ),
       body: Container(
         color: Color(0xFF737373),
         child: Container(

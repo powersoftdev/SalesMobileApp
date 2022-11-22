@@ -4,7 +4,7 @@ import '../Model/Products.dart';
 
 class MyStore extends ChangeNotifier {
   List<Product> _products = [];
-  List<Product> _baskets = [];
+  final List<Product> _baskets = [];
   Product _activeProduct = Product();
 
 //constructor to initialize the variables
@@ -80,7 +80,7 @@ class MyStore extends ChangeNotifier {
   }
 
   addOneItemToBasket(Product p) {
-    if (_baskets.length > 0) {
+    if (_baskets.isNotEmpty) {
       var foundItem =
           _baskets.firstWhere((a) => a.id == p.id, orElse: () => Product());
 
@@ -103,7 +103,7 @@ class MyStore extends ChangeNotifier {
   }
 
   removeOneItemFromBasket(Product p) {
-    if (_baskets.length > 0) {
+    if (_baskets.isNotEmpty) {
       var foundItem =
           _baskets.firstWhere((a) => a.id == p.id, orElse: () => Product());
 

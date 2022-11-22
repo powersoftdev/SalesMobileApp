@@ -107,7 +107,7 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
                 showModalBottomSheet<void>(
                   context: context,
                   isScrollControlled: true,
-                  builder: (context) => Container(
+                  builder: (context) => SizedBox(
                     height: 500,
                     child: _popupProductDetails(),
                   ),

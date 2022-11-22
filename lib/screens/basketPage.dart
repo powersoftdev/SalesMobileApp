@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,16 +21,16 @@ class _BasketPageState extends State<BasketPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Center(child: Text('Cart')),
+        title: const Center(child: Text('Cart')),
         actions: [
           IconButton(
-            icon: Icon(Icons.shopping_cart),
+            icon: const Icon(Icons.shopping_cart),
             onPressed: () {},
             iconSize: 40,
           ),
           Text(
             store.getBasketQty().toString(),
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
             ),
           ),
@@ -38,7 +38,7 @@ class _BasketPageState extends State<BasketPage> {
       ),
       bottomNavigationBar: BottomAppBar(
         child: Container(
-          padding: EdgeInsets.only(left: 30, right: 30, bottom: 30),
+          padding: const EdgeInsets.only(left: 30, right: 30, bottom: 30),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
@@ -50,7 +50,7 @@ class _BasketPageState extends State<BasketPage> {
               ),
             ),
             onPressed: () {},
-            child: Text('Check Out'),
+            child: const Text('Check Out'),
           ),
         ),
       ),
@@ -75,7 +75,7 @@ class _BasketPageState extends State<BasketPage> {
                       flex: 2,
                       child: Text(
                         store.baskets[i].name!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 25,
                         ),
                       ),
@@ -92,35 +92,34 @@ class _BasketPageState extends State<BasketPage> {
                           },
                         );
                       },
-                      icon: Icon(Icons.close),
+                      icon: const Icon(Icons.close),
                     ),
                   ],
                 ),
-                Container(
+                SizedBox(
                   height: 30,
-                  // color: Colors.cyan,
                   child:
                       Text("Order Date :${formatter.format(DateTime.now())}"),
                 ),
                 Container(
                   height: 40,
                   // color: Colors.red,
-                  padding: EdgeInsets.only(left: 100),
+                  padding: const EdgeInsets.only(left: 100),
                   child: Row(
                     children: [
                       IconButton(
                         onPressed: () {
                           store.removeOneItemFromBasket(store.baskets[i]);
                         },
-                        icon: Icon(Icons.remove),
+                        icon: const Icon(Icons.remove),
                         iconSize: 32,
                         color: Colors.redAccent,
                       ),
-                      SizedBox(width: 15),
+                      const SizedBox(width: 15),
                       Container(
                         height: 20,
                         width: 40,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             // border: Border.all(
                             //   color: Colors.grey,
                             // ),
@@ -134,17 +133,15 @@ class _BasketPageState extends State<BasketPage> {
                         onPressed: () {
                           store.addOneItemToBasket(store.baskets[i]);
                         },
-                        icon: Icon(Icons.add),
+                        icon: const Icon(Icons.add),
                         iconSize: 30,
                         color: Colors.greenAccent,
                       ),
-                      SizedBox(width: 30),
-                      Container(
-                        child: Text(
-                          ('₦ ${store.baskets[i].totalPrice.toString()}'),
-                          style: TextStyle(
-                            fontSize: 22,
-                          ),
+                      const SizedBox(width: 30),
+                      Text(
+                        ('₦ ${store.baskets[i].totalPrice.toString()}'),
+                        style: const TextStyle(
+                          fontSize: 22,
                         ),
                       ),
                     ],
