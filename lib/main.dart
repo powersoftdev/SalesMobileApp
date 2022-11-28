@@ -7,10 +7,11 @@ import 'package:sales_order/Screens/login_screen.dart';
 import 'package:sales_order/Store/MyStore.dart';
 
 void main() {
-  return runApp(
+  return runApp( 
     ChangeNotifierProvider(
       create: (BuildContext context) {
         return MyStore();
+        
       },
       child: MaterialApp(
         home: LoginScreen(),
