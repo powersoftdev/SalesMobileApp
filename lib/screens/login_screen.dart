@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:sales_order/Screens/dashboard.dart';
+import 'package:sales_order/screens/registration.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,6 +13,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+
+  var _userName, _password;
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     }
                                     return null;
                                   },
+                                  onSaved: (value) => _userName = value,
                                 ),
                                 SizedBox(
                                   height: 15,
@@ -154,6 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     // password most contain a uppercase letter,number,lowercase letter and it must be at least 8 characters
                                     return null;
                                   },
+                                  onSaved: (value) => _password = value,
                                 ),
                                 SizedBox(
                                   height: 5,
@@ -180,13 +185,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 20,
-                          child: Text(
-                            'Forget your password? Click here',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Register(),
+                              ),
+                            );
+                          },
+                          child: SizedBox(
+                            height: 20,
+                            child: Text(
+                              'Forget your password? Click here',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
                             ),
                           ),
                         )
