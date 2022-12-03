@@ -7,6 +7,7 @@ import '../Store/MyStore.dart';
 import '../Screens/ProductDetailPage.dart';
 import '../Screens/basketPage.dart';
 import '../Screens/dashboard.dart';
+import '../Model/item.dart';
 
 class SelectItemScreen extends StatefulWidget {
   const SelectItemScreen({super.key});
@@ -17,6 +18,7 @@ class SelectItemScreen extends StatefulWidget {
 
 class _SelectItemScreenState extends State<SelectItemScreen> {
   // ignore: prefer_final_fields
+
   TextEditingController? _textEditingController = TextEditingController();
 
   @override

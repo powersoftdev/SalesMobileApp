@@ -1,9 +1,33 @@
 import 'package:flutter/material.dart';
 import '../../Screens/login_screen.dart';
 import '../../Screens/select_item.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
-class DashBoard extends StatelessWidget {
+class DashBoard extends StatefulWidget {
   const DashBoard({super.key});
+
+  @override
+  State<DashBoard> createState() => _DashBoardState();
+}
+
+class _DashBoardState extends State<DashBoard> {
+  String customerName = "";
+  late final SharedPreferences _prefs;
+
+  @override
+  void initState() {
+    getStringValuesSF();
+    super.initState();
+  }
+
+  getStringValuesSF() async {
+    _prefs = await SharedPreferences.getInstance();
+    setState(() {
+      customerName = _prefs.getString('customerName') ?? "";
+    });
+    return customerName;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +51,7 @@ class DashBoard extends StatelessWidget {
                 left: 20.0,
               ),
               child: Text(
-                'Welcome ####',
+                'Welcome ,$customerName',
                 style: TextStyle(
                   fontSize: 30,
                   color: Colors.blue[900],
