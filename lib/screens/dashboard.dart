@@ -39,33 +39,20 @@ class _DashBoardState extends State<DashBoard> {
       ),
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: 60,
-              width: 400,
-              color: Colors.white,
-              padding: const EdgeInsets.only(
-                top: 10.0,
-                left: 20.0,
-              ),
-              child: Text(
-                'Welcome ,$customerName',
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.blue[900],
-                ),
+            Text(
+              'Welcome ,$customerName',
+              style: TextStyle(
+                fontSize: 30,
+                color: Colors.blue[900],
               ),
             ),
-            Container(
-              height: 80,
-              // width: 100,
-              color: Colors.white,
-              padding: const EdgeInsets.only(
-                top: 25.0,
-                left: 90.0,
-              ),
+            SizedBox(
+              height: 30,
+            ),
+            Center(
               child: Text(
                 'Sales Bookings',
                 style: TextStyle(
@@ -74,6 +61,38 @@ class _DashBoardState extends State<DashBoard> {
                 ),
               ),
             ),
+            // Container(
+            //   height: 60,
+            //   width: 400,
+            //   color: Colors.red,
+            //   padding: const EdgeInsets.only(
+            //     top: 10.0,
+            //     left: 20.0,
+            //   ),
+            //   child: Text(
+            //     'Welcome ,$customerName',
+            //     style: TextStyle(
+            //       fontSize: 30,
+            //       color: Colors.blue[900],
+            //     ),
+            //   ),
+            // ),
+            // Container(
+            //   height: 80,
+            //   // width: 100,
+            //   color: Colors.green,
+            //   padding: const EdgeInsets.only(
+            //     top: 25.0,
+            //     left: 90.0,
+            //   ),
+            //   child: Text(
+            //     'Sales Bookings',
+            //     style: TextStyle(
+            //       fontSize: 30,
+            //       color: Colors.blue[900],
+            //     ),
+            //   ),
+            // ),
             Stack(children: [
               Container(
                 height: 446,

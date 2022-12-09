@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final Item = ItemFromJson(jsonString);
+//     final ItemModel = ItemModelFromJson(jsonString);
 
 import 'dart:convert';
 
-Item ItemFromJson(String str) => Item.fromJson(json.decode(str));
+ItemModel ItemModelFromJson(String str) => ItemModel.fromJson(json.decode(str));
 
-String ItemToJson(Item data) => json.encode(data.toJson());
+String ItemModelToJson(ItemModel data) => json.encode(data.toJson());
 
-class Item {
-  Item({
+class ItemModel {
+  ItemModel({
     required this.status,
     required this.message,
     required this.data,
@@ -21,7 +21,7 @@ class Item {
   List<Datum> data;
   dynamic authToken;
 
-  factory Item.fromJson(Map<String, dynamic> json) => Item(
+  factory ItemModel.fromJson(Map<String, dynamic> json) => ItemModel(
         status: json["status"],
         message: json["message"],
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
@@ -41,49 +41,49 @@ class Datum {
     this.companyId,
     this.divisionId,
     this.departmentId,
-    this.itemId,
+    this.ItemId,
     this.isActive,
-    this.itemTypeId,
-    this.itemName,
-    this.itemDescription,
-    this.itemLongDescription,
-    this.itemCategoryId,
-    this.itemFamilyId,
+    this.ItemTypeId,
+    this.ItemName,
+    this.ItemDescription,
+    this.ItemLongDescription,
+    this.ItemCategoryId,
+    this.ItemFamilyId,
     this.salesDescription,
     this.purchaseDescription,
     this.pictureUrl,
     this.largePictureUrl,
-    this.itemWeight,
-    this.itemWeightMetric,
-    this.itemShipWeight,
-    this.itemUpccode,
-    this.itemEpccode,
-    this.itemRfid,
-    this.itemSize,
-    this.itemSizeCmm,
-    this.itemDimentions,
-    this.itemDimentionsCmm,
-    this.itemColor,
-    this.itemNrfcolor,
-    this.itemStyle,
-    this.itemNrfstyle,
-    this.itemCareInstructions,
-    this.itemDefaultWarehouse,
-    this.itemDefaultWarehouseBin,
-    this.itemLocationX,
-    this.itemLocationY,
-    this.itemLocationZ,
+    this.ItemWeight,
+    this.ItemWeightMetric,
+    this.ItemShipWeight,
+    this.ItemUpccode,
+    this.ItemEpccode,
+    this.ItemRfid,
+    this.ItemSize,
+    this.ItemSizeCmm,
+    this.ItemDimentions,
+    this.ItemDimentionsCmm,
+    this.ItemColor,
+    this.ItemNrfcolor,
+    this.ItemStyle,
+    this.ItemNrfstyle,
+    this.ItemCareInstructions,
+    this.ItemDefaultWarehouse,
+    this.ItemDefaultWarehouseBin,
+    this.ItemLocationX,
+    this.ItemLocationY,
+    this.ItemLocationZ,
     this.downloadLocation,
     this.downloadPassword,
-    this.itemUom,
-    this.glitemSalesAccount,
-    this.glitemCogsaccount,
-    this.glitemInventoryAccount,
+    this.ItemUom,
+    this.glItemSalesAccount,
+    this.glItemCogsaccount,
+    this.glItemInventoryAccount,
     this.packId,
     this.currencyId,
     this.currencyExchangeRate,
     this.price,
-    this.itemPricingCode,
+    this.ItemPricingCode,
     this.pricingMethods,
     this.taxable,
     this.vendorId,
@@ -100,7 +100,7 @@ class Datum {
     this.calculatedCover,
     this.calculatedCoverUnits,
     this.isAssembly,
-    this.itemAssembly,
+    this.ItemAssembly,
     this.lifo,
     this.lifovalue,
     this.lifocost,
@@ -130,14 +130,14 @@ class Datum {
     this.taxPercent,
     this.lockedBy,
     this.lockTs,
-    this.isSerialLotItem,
-    this.isWarrantyItem,
+    this.isSerialLotItemModel,
+    this.isWarrantyItemModel,
     this.warrantyPeriod,
     this.minimumQty,
     this.lastEditDate,
     this.creationDate,
-    this.glitemFreightAccount,
-    this.glitemHandlingAccount,
+    this.glItemModelFreightAccount,
+    this.glItemModelHandlingAccount,
     this.allowPurchaseTrans,
     this.allowSalesTrans,
     this.allowInventoryTrans,
@@ -153,49 +153,49 @@ class Datum {
   dynamic companyId;
   dynamic divisionId;
   dynamic departmentId;
-  dynamic itemId;
+  dynamic ItemId;
   dynamic isActive;
-  dynamic itemTypeId;
-  dynamic itemName;
-  dynamic itemDescription;
-  dynamic itemLongDescription;
-  dynamic itemCategoryId;
-  dynamic itemFamilyId;
+  dynamic ItemTypeId;
+  dynamic ItemName;
+  dynamic ItemDescription;
+  dynamic ItemLongDescription;
+  dynamic ItemCategoryId;
+  dynamic ItemFamilyId;
   dynamic salesDescription;
   dynamic purchaseDescription;
   dynamic pictureUrl;
   dynamic largePictureUrl;
-  dynamic itemWeight;
-  dynamic itemWeightMetric;
-  dynamic itemShipWeight;
-  dynamic itemUpccode;
-  dynamic itemEpccode;
-  dynamic itemRfid;
-  dynamic itemSize;
-  dynamic itemSizeCmm;
-  dynamic itemDimentions;
-  dynamic itemDimentionsCmm;
-  dynamic itemColor;
-  dynamic itemNrfcolor;
-  dynamic itemStyle;
-  dynamic itemNrfstyle;
-  dynamic itemCareInstructions;
-  dynamic itemDefaultWarehouse;
-  dynamic itemDefaultWarehouseBin;
-  dynamic itemLocationX;
-  dynamic itemLocationY;
-  dynamic itemLocationZ;
+  dynamic ItemWeight;
+  dynamic ItemWeightMetric;
+  dynamic ItemShipWeight;
+  dynamic ItemUpccode;
+  dynamic ItemEpccode;
+  dynamic ItemRfid;
+  dynamic ItemSize;
+  dynamic ItemSizeCmm;
+  dynamic ItemDimentions;
+  dynamic ItemDimentionsCmm;
+  dynamic ItemColor;
+  dynamic ItemNrfcolor;
+  dynamic ItemStyle;
+  dynamic ItemNrfstyle;
+  dynamic ItemCareInstructions;
+  dynamic ItemDefaultWarehouse;
+  dynamic ItemDefaultWarehouseBin;
+  dynamic ItemLocationX;
+  dynamic ItemLocationY;
+  dynamic ItemLocationZ;
   dynamic downloadLocation;
   dynamic downloadPassword;
-  dynamic itemUom;
-  dynamic glitemSalesAccount;
-  dynamic glitemCogsaccount;
-  dynamic glitemInventoryAccount;
+  dynamic ItemUom;
+  dynamic glItemSalesAccount;
+  dynamic glItemCogsaccount;
+  dynamic glItemInventoryAccount;
   dynamic packId;
   dynamic currencyId;
   dynamic currencyExchangeRate;
   dynamic price;
-  dynamic itemPricingCode;
+  dynamic ItemPricingCode;
   dynamic pricingMethods;
   dynamic taxable;
   dynamic vendorId;
@@ -212,7 +212,7 @@ class Datum {
   dynamic calculatedCover;
   dynamic calculatedCoverUnits;
   dynamic isAssembly;
-  dynamic itemAssembly;
+  dynamic ItemAssembly;
   dynamic lifo;
   dynamic lifovalue;
   dynamic lifocost;
@@ -242,14 +242,14 @@ class Datum {
   dynamic taxPercent;
   dynamic lockedBy;
   dynamic lockTs;
-  dynamic isSerialLotItem;
-  dynamic isWarrantyItem;
+  dynamic isSerialLotItemModel;
+  dynamic isWarrantyItemModel;
   dynamic warrantyPeriod;
   dynamic minimumQty;
   dynamic lastEditDate;
   dynamic creationDate;
-  dynamic glitemFreightAccount;
-  dynamic glitemHandlingAccount;
+  dynamic glItemModelFreightAccount;
+  dynamic glItemModelHandlingAccount;
   dynamic allowPurchaseTrans;
   dynamic allowSalesTrans;
   dynamic allowInventoryTrans;
@@ -265,52 +265,54 @@ class Datum {
         companyId: json["companyId"],
         divisionId: json["divisionId"],
         departmentId: json["departmentId"],
-        itemId: json["itemId"],
+        ItemId: json["itemModelId"],
         isActive: json["isActive"],
-        itemTypeId: json["itemTypeId"],
-        itemName: json["itemName"],
-        itemDescription: json["itemDescription"],
-        itemLongDescription: json["itemLongDescription"],
-        itemCategoryId: json["itemCategoryId"],
-        itemFamilyId: json["itemFamilyId"],
+        ItemTypeId: json["ItemTypeId"],
+        ItemName: json["itemName"],
+        ItemDescription: json["ItemDescription"],
+        ItemLongDescription: json["ItemLongDescription"],
+        ItemCategoryId: json["ItemCategoryId"],
+        ItemFamilyId: json["itemFamilyId"],
         salesDescription: json["salesDescription"],
         purchaseDescription: json["purchaseDescription"],
         pictureUrl: json["pictureUrl"],
         largePictureUrl: json["largePictureUrl"],
-        itemWeight: json["itemWeight"],
-        itemWeightMetric: json["itemWeightMetric"],
-        itemShipWeight: json["itemShipWeight"],
-        itemUpccode: json["itemUpccode"] == null ? null : json["itemUpccode"],
-        itemEpccode: json["itemEpccode"],
-        itemRfid: json["itemRfid"],
-        itemSize: json["itemSize"],
-        itemSizeCmm: json["itemSizeCmm"],
-        itemDimentions: json["itemDimentions"],
-        itemDimentionsCmm: json["itemDimentionsCmm"],
-        itemColor: json["itemColor"],
-        itemNrfcolor: json["itemNrfcolor"],
-        itemStyle: json["itemStyle"],
-        itemNrfstyle: json["itemNrfstyle"],
-        itemCareInstructions: json["itemCareInstructions"],
-        itemDefaultWarehouse: json["itemDefaultWarehouse"],
-        itemDefaultWarehouseBin: json["itemDefaultWarehouseBin"],
-        itemLocationX: json["itemLocationX"],
-        itemLocationY: json["itemLocationY"],
-        itemLocationZ: json["itemLocationZ"],
+        ItemWeight: json["ItemWeight"],
+        ItemWeightMetric: json["ItemWeightMetric"],
+        ItemShipWeight: json["ItemShipWeight"],
+        ItemUpccode:
+            json["ItemUpccode"] == null ? null : json["ItemModelUpccode"],
+        ItemEpccode: json["ItemEpccode"],
+        ItemRfid: json["ItemRfid"],
+        ItemSize: json["ItemSize"],
+        ItemSizeCmm: json["ItemSizeCmm"],
+        ItemDimentions: json["ItemDimentions"],
+        ItemDimentionsCmm: json["ItemDimentionsCmm"],
+        ItemColor: json["ItemColor"],
+        ItemNrfcolor: json["ItemNrfcolor"],
+        ItemStyle: json["ItemStyle"],
+        ItemNrfstyle: json["ItemNrfstyle"],
+        ItemCareInstructions: json["ItemCareInstructions"],
+        ItemDefaultWarehouse: json["ItemDefaultWarehouse"],
+        ItemDefaultWarehouseBin: json["ItemDefaultWarehouseBin"],
+        ItemLocationX: json["ItemLocationX"],
+        ItemLocationY: json["ItemLocationY"],
+        ItemLocationZ: json["ItemLocationZ"],
         downloadLocation: json["downloadLocation"],
         downloadPassword: json["downloadPassword"],
-        itemUom: json["itemUom"],
-        glitemSalesAccount: json["glitemSalesAccount"],
-        glitemCogsaccount: json["glitemCogsaccount"],
-        glitemInventoryAccount: json["glitemInventoryAccount"] == null
+        ItemUom: json["ItemModelUom"],
+        glItemSalesAccount: json["glItemSalesAccount"],
+        glItemCogsaccount: json["glItemCogsaccount"],
+        glItemInventoryAccount: json["glItemInventoryAccount"] == null
             ? null
-            : json["glitemInventoryAccount"],
+            : json["glItemInventoryAccount"],
         packId: json["packId"],
         currencyId: json["currencyId"],
         currencyExchangeRate: json["currencyExchangeRate"],
         price: json["price"],
-        itemPricingCode:
-            json["itemPricingCode"] == null ? null : json["itemPricingCode"],
+        ItemPricingCode: json["ItemModelPricingCode"] == null
+            ? null
+            : json["ItemPricingCode"],
         pricingMethods: json["pricingMethods"],
         taxable: json["taxable"],
         vendorId: json["vendorId"],
@@ -328,7 +330,7 @@ class Datum {
         calculatedCover: json["calculatedCover"],
         calculatedCoverUnits: json["calculatedCoverUnits"],
         isAssembly: json["isAssembly"],
-        itemAssembly: json["itemAssembly"],
+        ItemAssembly: json["ItemModelAssembly"],
         lifo: json["lifo"],
         lifovalue: json["lifovalue"] == null ? null : json["lifovalue"],
         lifocost: json["lifocost"] == null ? null : json["lifocost"],
@@ -361,14 +363,14 @@ class Datum {
         taxPercent: json["taxPercent"],
         lockedBy: json["lockedBy"],
         lockTs: json["lockTs"],
-        isSerialLotItem: json["isSerialLotItem"],
-        isWarrantyItem: json["isWarrantyItem"],
+        isSerialLotItemModel: json["isSerialLotItemModel"],
+        isWarrantyItemModel: json["isWarrantyItemModel"],
         warrantyPeriod: json["warrantyPeriod"],
         minimumQty: json["minimumQty"],
         lastEditDate: DateTime.parse(json["lastEditDate"]),
         creationDate: DateTime.parse(json["creationDate"]),
-        glitemFreightAccount: json["glitemFreightAccount"],
-        glitemHandlingAccount: json["glitemHandlingAccount"],
+        glItemModelFreightAccount: json["glItemModelFreightAccount"],
+        glItemModelHandlingAccount: json["glItemModelHandlingAccount"],
         allowPurchaseTrans: json["allowPurchaseTrans"],
         allowSalesTrans: json["allowSalesTrans"],
         allowInventoryTrans: json["allowInventoryTrans"],
@@ -385,50 +387,51 @@ class Datum {
         "companyId": companyId,
         "divisionId": divisionId,
         "departmentId": departmentId,
-        "itemId": itemId,
+        "ItemModelId": ItemId,
         "isActive": isActive,
-        "itemTypeId": itemTypeId,
-        "itemName": itemName,
-        "itemDescription": itemDescription,
-        "itemLongDescription": itemLongDescription,
-        "itemCategoryId": itemCategoryId,
-        "itemFamilyId": itemFamilyId,
+        "ItemModelTypeId": ItemTypeId,
+        "ItemModelName": ItemName,
+        "ItemModelDescription": ItemDescription,
+        "ItemModelLongDescription": ItemLongDescription,
+        "ItemModelCategoryId": ItemCategoryId,
+        "ItemModelFamilyId": ItemFamilyId,
         "salesDescription": salesDescription,
         "purchaseDescription": purchaseDescription,
         "pictureUrl": pictureUrl,
         "largePictureUrl": largePictureUrl,
-        "itemWeight": itemWeight,
-        "itemWeightMetric": itemWeightMetric,
-        "itemShipWeight": itemShipWeight,
-        "itemUpccode": itemUpccode == null ? null : itemUpccode,
-        "itemEpccode": itemEpccode,
-        "itemRfid": itemRfid,
-        "itemSize": itemSize,
-        "itemSizeCmm": itemSizeCmm,
-        "itemDimentions": itemDimentions,
-        "itemDimentionsCmm": itemDimentionsCmm,
-        "itemColor": itemColor,
-        "itemNrfcolor": itemNrfcolor,
-        "itemStyle": itemStyle,
-        "itemNrfstyle": itemNrfstyle,
-        "itemCareInstructions": itemCareInstructions,
-        "itemDefaultWarehouse": itemDefaultWarehouse,
-        "itemDefaultWarehouseBin": itemDefaultWarehouseBin,
-        "itemLocationX": itemLocationX,
-        "itemLocationY": itemLocationY,
-        "itemLocationZ": itemLocationZ,
+        "ItemModelWeight": ItemWeight,
+        "ItemModelWeightMetric": ItemWeightMetric,
+        "ItemModelShipWeight": ItemShipWeight,
+        "ItemModelUpccode": ItemUpccode == null ? null : ItemUpccode,
+        "ItemModelEpccode": ItemEpccode,
+        "ItemModelRfid": ItemRfid,
+        "ItemModelSize": ItemSize,
+        "ItemModelSizeCmm": ItemSizeCmm,
+        "ItemModelDimentions": ItemDimentions,
+        "ItemModelDimentionsCmm": ItemDimentionsCmm,
+        "ItemModelColor": ItemColor,
+        "ItemModelNrfcolor": ItemNrfcolor,
+        "ItemModelStyle": ItemStyle,
+        "ItemModelNrfstyle": ItemNrfstyle,
+        "ItemModelCareInstructions": ItemCareInstructions,
+        "ItemModelDefaultWarehouse": ItemDefaultWarehouse,
+        "ItemModelDefaultWarehouseBin": ItemDefaultWarehouseBin,
+        "ItemModelLocationX": ItemLocationX,
+        "ItemModelLocationY": ItemLocationY,
+        "ItemModelLocationZ": ItemLocationZ,
         "downloadLocation": downloadLocation,
         "downloadPassword": downloadPassword,
-        "itemUom": itemUom,
-        "glitemSalesAccount": glitemSalesAccount,
-        "glitemCogsaccount": glitemCogsaccount,
-        "glitemInventoryAccount":
-            glitemInventoryAccount == null ? null : glitemInventoryAccount,
+        "ItemModelUom": ItemUom,
+        "glItemModelSalesAccount": glItemSalesAccount,
+        "glItemModelCogsaccount": glItemCogsaccount,
+        "glItemModelInventoryAccount":
+            glItemInventoryAccount == null ? null : glItemInventoryAccount,
         "packId": packId,
         "currencyId": currencyId,
         "currencyExchangeRate": currencyExchangeRate,
         "price": price,
-        "itemPricingCode": itemPricingCode == null ? null : itemPricingCode,
+        "ItemModelPricingCode":
+            ItemPricingCode == null ? null : ItemPricingCode,
         "pricingMethods": pricingMethods,
         "taxable": taxable,
         "vendorId": vendorId,
@@ -445,7 +448,7 @@ class Datum {
         "calculatedCover": calculatedCover,
         "calculatedCoverUnits": calculatedCoverUnits,
         "isAssembly": isAssembly,
-        "itemAssembly": itemAssembly,
+        "ItemModelAssembly": ItemAssembly,
         "lifo": lifo,
         "lifovalue": lifovalue == null ? null : lifovalue,
         "lifocost": lifocost == null ? null : lifocost,
@@ -475,14 +478,14 @@ class Datum {
         "taxPercent": taxPercent,
         "lockedBy": lockedBy,
         "lockTs": lockTs,
-        "isSerialLotItem": isSerialLotItem,
-        "isWarrantyItem": isWarrantyItem,
+        "isSerialLotItemModel": isSerialLotItemModel,
+        "isWarrantyItemModel": isWarrantyItemModel,
         "warrantyPeriod": warrantyPeriod,
         "minimumQty": minimumQty,
         "lastEditDate": lastEditDate.toIso8601String(),
         "creationDate": creationDate.toIso8601String(),
-        "glitemFreightAccount": glitemFreightAccount,
-        "glitemHandlingAccount": glitemHandlingAccount,
+        "glItemModelFreightAccount": glItemModelFreightAccount,
+        "glItemModelHandlingAccount": glItemModelHandlingAccount,
         "allowPurchaseTrans": allowPurchaseTrans,
         "allowSalesTrans": allowSalesTrans,
         "allowInventoryTrans": allowInventoryTrans,

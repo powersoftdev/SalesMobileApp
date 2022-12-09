@@ -1,8 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sales_order/Model/products.dart';
 import 'package:sales_order/Screens/login_screen.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Store/MyStore.dart';
 import '../Screens/ProductDetailPage.dart';
 import '../Screens/basketPage.dart';
@@ -21,10 +25,48 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
 
   TextEditingController? _textEditingController = TextEditingController();
 
+  var itemId;
+  late int minimumQty;
+  late String itemName;
+  late double price;
+  late String pictureurl;
+  late String itemFamilyId;
+  String? token;
+
+  Future<String?> getToken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
+  }
+
+  Future<List<Datum>> callApi() async {
+    await getToken();
+    final response = await http.get(
+        Uri.parse('http://powersoftrd.com/PEMAPI/api/GetInventoryItems/741258'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    print('token : ${token}');
+
+    if (response.statusCode == 200) {
+      final result = json.decode(response.body);
+      // final itemModels = result["data"];
+      var itemModel = ItemModel.fromJson(result);
+      return itemModel.data;
+      // return ItemModels.map((e) => ItemModelFromJson(e)).toList();
+
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     //register for thr listener to listen for any notifications
-    var store = Provider.of<MyStore>(context);
+    // var store = Provider.of<MyStore>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -70,12 +112,12 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
             },
             iconSize: 40,
           ),
-          Text(
-            store.getBasketQty().toString(),
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
+          // Text(
+          //   store.getBasketQty().toString(),
+          //   style: TextStyle(
+          //     color: Colors.white,
+          //   ),
+          // ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -131,38 +173,48 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
           }
         },
       ),
-      body: ListView.builder(
-        itemCount: store.products.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Image.asset(
-                  'lib/images/newsp.jpg',
-                ),
-              ),
-              title: Text(store.products[index].name!),
-              subtitle: Text('₦ ${store.products[index].price.toString()}'),
-              trailing: Text('₦ ${store.products[index].price.toString()}'),
-              onTap: () {
-                //set the item as the activeProduct
-                store.setActiveProduct(
-                  store.products[index],
-                );
-                //move to productDetail page
-                showModalBottomSheet<void>(
-                  context: context,
-                  isScrollControlled: true,
-                  // ignore: sized_box_for_whitespace
-                  builder: (context) => Container(
-                    height: 500,
-                    child: _popupProductDetails(),
+      body: FutureBuilder<List<Datum>>(
+        future: callApi(),
+        builder: (context, snapshot) {
+          var data = snapshot.data;
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: data!.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: Image.asset(
+                        'lib/images/newsp.jpg',
+                      ),
+                    ),
+                    title: Text(data[index].ItemName),
+                    subtitle: Text(data[index].ItemFamilyId),
+                    trailing: Text('₦ ${data[index].price.toString()}'),
+                    onTap: () {
+                      // set the item as the activeProduct
+                      // store.setActiveProduct(
+                      //   store.products[index],
+                      // );
+                      //move to productDetail page
+                      showModalBottomSheet<void>(
+                        context: context,
+                        isScrollControlled: true,
+                        // ignore: sized_box_for_whitespace
+                        builder: (context) => Container(
+                          height: 500,
+                          child: _popupProductDetails(),
+                        ),
+                      );
+                    },
                   ),
                 );
               },
-            ),
-          );
+            );
+          } else {
+            return CircularProgressIndicator();
+          }
         },
       ),
     );

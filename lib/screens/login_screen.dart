@@ -18,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
   dynamic customerName;
+  String? token;
 
   String password = '';
 
@@ -54,10 +55,14 @@ class _LoginScreenState extends State<LoginScreen> {
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
 
-      prefs.setString('customerEmail', emailcontroller.text);
-      prefs.setString('customerName', customerName);
+      await prefs.setString('customerEmail', emailcontroller.text);
+      await prefs.setString('customerName', customerName);
+      await prefs.setString('token', responseData.authToken);
+      String? tokenFromSP = prefs.getString('token');
 
       print(customerName);
+      print('responseData.authToken: ' + responseData.authToken);
+      print('token from sp: ' + tokenFromSP!);
     }
 
     Navigator.of(context)
