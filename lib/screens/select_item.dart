@@ -32,6 +32,14 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
   late String pictureurl;
   late String itemFamilyId;
   String? token;
+  Future<List<Datum>> productListAPIResult =
+      Future.value(List<Datum>.from([Datum()]));
+
+  @override
+  void initState() {
+    productListAPIResult = callApi();
+    super.initState();
+  }
 
   Future<String?> getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -66,12 +74,12 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
   @override
   Widget build(BuildContext context) {
     //register for thr listener to listen for any notifications
-    // var store = Provider.of<MyStore>(context);
+    var store = Provider.of<MyStore>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Center(
-          child: Text('Catlog'),
+          child: Text('Catalog'),
         ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(50),
@@ -174,7 +182,7 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
         },
       ),
       body: FutureBuilder<List<Datum>>(
-        future: callApi(),
+        future: productListAPIResult,
         builder: (context, snapshot) {
           var data = snapshot.data;
           if (snapshot.hasData) {
@@ -194,9 +202,15 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
                     trailing: Text('₦ ${data[index].price.toString()}'),
                     onTap: () {
                       // set the item as the activeProduct
-                      // store.setActiveProduct(
-                      //   store.products[index],
-                      // );
+                      store.setActiveProduct(
+                        Product(
+                            id: data[index].ItemId,
+                            name: data[index].ItemName,
+                            price: data[index].price,
+                            qty: _getQty(data[index].ItemId, store),
+                            // qty: store.activeProduct!.qty ?? 1,
+                            totalPrice: 0),
+                      );
                       //move to productDetail page
                       showModalBottomSheet<void>(
                         context: context,
@@ -221,4 +235,18 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
   }
 
   ProductDetailpage _popupProductDetails() => ProductDetailpage();
+
+  int _getQty(dynamic itemId, MyStore store) {
+    var baskets = store.baskets;
+    if (store.baskets.isNotEmpty) {
+      var product =
+          baskets.firstWhere((a) => a.id == itemId, orElse: () => Product());
+      if (product.qty != null) {
+        return product.qty!; // return current product qty if it exists.
+      }
+      return 0; // if basket is not empty but product not found, return 0
+    }
+
+    return 0; // if basket is empty return 0
+  }
 }

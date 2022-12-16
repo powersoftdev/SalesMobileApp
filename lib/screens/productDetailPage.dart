@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sales_order/Model/products.dart';
 
 import '../Store/MyStore.dart';
 import 'basketPage.dart';
@@ -17,14 +19,25 @@ class ProductDetailpage extends StatefulWidget {
 
 class _ProductDetailpageState extends State<ProductDetailpage> {
   final _date = TextEditingController();
+  final _qtyCtrl = TextEditingController();
+  String qtyStr = '';
+
+  @override
+  void dispose() {
+    _date.dispose();
+    _qtyCtrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     var store = Provider.of<MyStore>(context);
-    String qtyStr = store.activeProduct!.qty.toString();
+    // qtyStr = store.activeProduct!.qty.toString();
+    qtyStr = _getQty(store);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // appBar: AppBar(
+
       //   title: Text('Product Details'),
       //   actions: [
       //     IconButton(
@@ -132,6 +145,11 @@ class _ProductDetailpageState extends State<ProductDetailpage> {
                   children: [
                     IconButton(
                       onPressed: () {
+                        setState(() {
+                          _qtyCtrl.text =
+                              ((int.tryParse(_qtyCtrl.text) ?? 0) - 1)
+                                  .toString();
+                        });
                         store.removeOneItemFromBasket(store.activeProduct!);
                       },
                       icon: Icon(Icons.remove),
@@ -146,11 +164,14 @@ class _ProductDetailpageState extends State<ProductDetailpage> {
                       width: 40,
                       child: TextFormField(
                         // controller: _date,
-                        controller: TextEditingController()
+                        controller: _qtyCtrl
                           ..text = qtyStr
                           ..selection =
                               TextSelection.collapsed(offset: qtyStr.length),
                         onChanged: (text) {
+                          setState(() {
+                            qtyStr = '10';
+                          });
                           store.increaseItemQuantity(
                               (int.tryParse(text) ?? 0), store.activeProduct!);
                         },
@@ -165,6 +186,11 @@ class _ProductDetailpageState extends State<ProductDetailpage> {
                     ),
                     IconButton(
                       onPressed: () {
+                        setState(() {
+                          _qtyCtrl.text =
+                              ((int.tryParse(_qtyCtrl.text) ?? 0) + 1)
+                                  .toString();
+                        });
                         store.addOneItemToBasket(store.activeProduct!);
                       },
                       icon: Icon(Icons.add),
@@ -235,5 +261,21 @@ class _ProductDetailpageState extends State<ProductDetailpage> {
         ),
       ),
     );
+  }
+
+  String _getQty(MyStore store) {
+    var baskets = store.baskets;
+    var activeItem = store.activeProduct;
+    if (store.baskets.isNotEmpty) {
+      var product = baskets.firstWhere((a) => a.id == activeItem!.id,
+          orElse: () => Product());
+      if (product.qty != null) {
+        return product.qty!
+            .toString(); // return current product qty if it exists.
+      }
+      return '0'; // if basket is not empty but product not found, return 0
+    }
+
+    return '0'; // if basket is empty return 0
   }
 }
