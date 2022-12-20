@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sales_order/Store/MyStore.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'checkout.dart';
 
@@ -16,6 +17,23 @@ class BasketPage extends StatefulWidget {
 
 class _BasketPageState extends State<BasketPage> {
   final DateFormat formatter = DateFormat('MM-dd-yyyy');
+
+  String pickeddate = "";
+  late final SharedPreferences _prefs;
+
+  @override
+  void initState() {
+    getStringValuesSF();
+    super.initState();
+  }
+
+  getStringValuesSF() async {
+    _prefs = await SharedPreferences.getInstance();
+    setState(() {
+      pickeddate = _prefs.getString('pickeddate') ?? "";
+    });
+    return pickeddate;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +71,11 @@ class _BasketPageState extends State<BasketPage> {
             ),
             onPressed: () {
               Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Checkout(),
-                        ),
-                      );
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Checkout(),
+                ),
+              );
             },
             child: Text('Check Out'),
           ),
@@ -111,8 +129,7 @@ class _BasketPageState extends State<BasketPage> {
                   // ignore: sized_box_for_whitespace
                   Container(
                     height: 30,
-                    child:
-                        Text("Order Date :${formatter.format(DateTime.now())}"),
+                    child: Text("Order Date :$pickeddate"),
                   ),
                   Container(
                     height: 40,

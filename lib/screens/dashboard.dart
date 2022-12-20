@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sales_order/screens/profileScreen.dart';
 import '../../Screens/login_screen.dart';
 import '../../Screens/select_item.dart';
 import 'package:http/http.dart' as http;
@@ -42,11 +43,18 @@ class _DashBoardState extends State<DashBoard> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Welcome ,$customerName',
-              style: TextStyle(
-                fontSize: 30,
-                color: Colors.blue[900],
+            Container(
+              padding: const EdgeInsets.only(
+                top: 15,
+                left: 15,
+                right: 15,
+              ),
+              child: Text(
+                'Welcome ,$customerName',
+                style: TextStyle(
+                  fontSize: 26,
+                  color: Colors.blue[900],
+                ),
               ),
             ),
             SizedBox(
@@ -56,7 +64,7 @@ class _DashBoardState extends State<DashBoard> {
               child: Text(
                 'Sales Bookings',
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 26,
                   color: Colors.blue[900],
                 ),
               ),
@@ -153,7 +161,7 @@ class _DashBoardState extends State<DashBoard> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
+                        builder: (context) => const profileScreen(),
                       ),
                     );
                   },
@@ -240,7 +248,7 @@ class _DashBoardState extends State<DashBoard> {
             case 2:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const LoginScreen()),
+                MaterialPageRoute(builder: (context) => const profileScreen()),
               );
               break;
             default:

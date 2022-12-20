@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:sales_order/Model/products.dart';
 import 'package:sales_order/Screens/login_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:sales_order/screens/profileScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Store/MyStore.dart';
 import '../Screens/ProductDetailPage.dart';
@@ -22,8 +23,7 @@ class SelectItemScreen extends StatefulWidget {
 
 class _SelectItemScreenState extends State<SelectItemScreen> {
   // ignore: prefer_final_fields
-
-  TextEditingController? _textEditingController = TextEditingController();
+  TextEditingController txtQuery = new TextEditingController();
 
   var itemId;
   late int minimumQty;
@@ -32,6 +32,15 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
   late String pictureurl;
   late String itemFamilyId;
   String? token;
+
+  Future<List<Datum>> productListAPIResult =
+      Future.value(List<Datum>.from([Datum()]));
+
+  @override
+  void initState() {
+    productListAPIResult = callApi();
+    super.initState();
+  }
 
   Future<String?> getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -66,7 +75,7 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
   @override
   Widget build(BuildContext context) {
     //register for thr listener to listen for any notifications
-    // var store = Provider.of<MyStore>(context);
+    var store = Provider.of<MyStore>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -82,12 +91,8 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
               color: Colors.blue[50],
             ),
             child: TextField(
-              onChanged: ((value) {
-                setState(
-                  () {},
-                );
-              }),
-              controller: _textEditingController,
+              // onChanged: search,
+              controller: txtQuery,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 // contentPadding: EdgeInsets.all(5),
@@ -96,7 +101,13 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
                   Icons.search,
                   size: 32,
                 ),
-                suffixIcon: Icon(Icons.close),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    //   txtQuery.text = '';
+                    //   search(txtQuery.text);
+                  },
+                ),
               ),
             ),
           ),
@@ -111,6 +122,12 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
               );
             },
             iconSize: 40,
+          ),
+          Text(
+            store.getBasketQty().toString(),
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
           // Text(
           //   store.getBasketQty().toString(),
@@ -166,7 +183,7 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
             case 2:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const LoginScreen()),
+                MaterialPageRoute(builder: (context) => const profileScreen()),
               );
               break;
             default:
@@ -174,7 +191,7 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
         },
       ),
       body: FutureBuilder<List<Datum>>(
-        future: callApi(),
+        future: productListAPIResult,
         builder: (context, snapshot) {
           var data = snapshot.data;
           if (snapshot.hasData) {
@@ -189,14 +206,20 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
                         'lib/images/newsp.jpg',
                       ),
                     ),
-                    title: Text(data[index].ItemName),
-                    subtitle: Text(data[index].ItemFamilyId),
+                    title: Text(data[index].ItemName.toString()),
+                    subtitle: Text(data[index].ItemFamilyId.toString()),
                     trailing: Text('₦ ${data[index].price.toString()}'),
                     onTap: () {
                       // set the item as the activeProduct
-                      // store.setActiveProduct(
-                      //   store.products[index],
-                      // );
+                      store.setActiveProduct(
+                        Product(
+                            id: data[index].ItemId,
+                            name: data[index].ItemName,
+                            price: data[index].price,
+                            qty: _getQty(data[index].ItemId, store),
+                            // qty: store.activeProduct!.qty ?? 1,
+                            totalPrice: 0),
+                      );
                       //move to productDetail page
                       showModalBottomSheet<void>(
                         context: context,
@@ -221,4 +244,17 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
   }
 
   ProductDetailpage _popupProductDetails() => ProductDetailpage();
+  int _getQty(dynamic itemId, MyStore store) {
+    var baskets = store.baskets;
+    if (store.baskets.isNotEmpty) {
+      var product =
+          baskets.firstWhere((a) => a.id == itemId, orElse: () => Product());
+      if (product.qty != null) {
+        return product.qty!; // return current product qty if it exists.
+      }
+      return 0; // if basket is not empty but product not found, return 0
+    }
+
+    return 0; // if basket is empty return 0
+  }
 }

@@ -1,5 +1,7 @@
+import 'package:flutter/rendering.dart';
+
 class Product {
-  int? id;
+  String? id;
   String? name;
   double? price;
   int? qty;

@@ -265,7 +265,7 @@ class Datum {
         companyId: json["companyId"],
         divisionId: json["divisionId"],
         departmentId: json["departmentId"],
-        ItemId: json["itemModelId"],
+        ItemId: json["itemId"],
         isActive: json["isActive"],
         ItemTypeId: json["ItemTypeId"],
         ItemName: json["itemName"],
