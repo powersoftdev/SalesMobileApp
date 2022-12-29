@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print, prefer_interpolation_to_compose_strings, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:sales_order/Screens/dashboard.dart';
@@ -17,6 +17,12 @@ class _LoginScreenState extends State<LoginScreen> {
   // final GlobalKey<FormState> _key = GlobalKey<FormState>();
   bool _obscureText = true;
 
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
 
@@ -24,18 +30,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String password = '';
 
-  // late final SharedPreferences _prefs = await SharedPreferences.getInstance();
-
   Future<void> callApi() async {
     print(emailcontroller.text);
     print(passwordcontroller.text);
 
     showDialog(
-      context: context,
-      builder: (context) {
-        return Center(child: CircularProgressIndicator());
-      },
-    );
+        context: context,
+        builder: (context) {
+          return Center(child: CircularProgressIndicator());
+        });
 
     var url = Uri.parse(
         'https://powersoftrd.com/PEMAPI/api/CustomerLoginEmail/741258?Email=' +
@@ -47,22 +50,62 @@ class _LoginScreenState extends State<LoginScreen> {
     }).timeout(
       const Duration(seconds: 15),
       onTimeout: () {
-        return http.Response('Error', 408);
+        Navigator.of(context).pop();
+        return http.Response(
+            CustomerModelToJson(CustomerModel(
+                status: "Failed",
+                message: "Cannot Connect to Internet.",
+                data: [],
+                authToken: "")),
+            408);
       },
     );
     final CustomerModel responseData = CustomerModelFromJson(response.body);
 
-    var customerInformation = responseData.data.first;
-    var customerName = customerInformation.customerName;
-    var customerId = customerInformation.customerId;
-    var customerEmail = customerInformation.customerEmail;
-    var customerPhone = customerInformation.customerPhone;
-    var accountBalance = customerInformation.accountBalance;
-    var customerAddress1 = customerInformation.customerAddress1;
-    var customerAddress2 = customerInformation.customerAddress2;
-    var customerAddress3 = customerInformation.customerAddress3;
+    if (responseData.status == 'Success') {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    if (responseData.status == 'Failed') {
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      var customerInformation = responseData.data.first;
+      var customerName = customerInformation.customerName;
+      var customerId = customerInformation.customerId;
+      var customerEmail = customerInformation.customerEmail;
+      var customerPhone = customerInformation.customerPhone;
+      var accountBalance = customerInformation.accountBalance;
+      var customerAddress1 = customerInformation.customerAddress1;
+      var customerAddress2 = customerInformation.customerAddress2;
+      var customerAddress3 = customerInformation.customerAddress3;
+      var customerCity = customerInformation.customerCity;
+      var customerState = customerInformation.customerState;
+      var customerCountry = customerInformation.customerCountry;
+      var customerTypeId = customerInformation.customerTypeId;
+
+      await prefs.setString('customerEmail', emailcontroller.text);
+      await prefs.setString('customerName', customerName);
+      await prefs.setString('customerId', customerId);
+      await prefs.setString('customerEmail', customerEmail);
+      await prefs.setString('customerPhone', customerPhone);
+      await prefs.setDouble('accountBalance', accountBalance);
+      await prefs.setString('customerAddress1', customerAddress1);
+      await prefs.setString('customerAddress2', customerAddress2);
+      await prefs.setString('customerAddress3', customerAddress3);
+      await prefs.setString('customerCity', customerCity);
+      await prefs.setString('customerTypeId', customerTypeId);
+      await prefs.setString('customerCountry', customerCountry);
+      await prefs.setString('customerState', customerState);
+      await prefs.setString('token', responseData.authToken);
+      String? tokenFromSP = prefs.getString('token');
+
+      print(customerTypeId);
+      print(customerPhone);
+      print('responseData.authToken: ' + responseData.authToken);
+      print('token from sp: ' + tokenFromSP!);
+
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => DashBoard()));
+    } else if (responseData.status == 'Failed') {
       showDialog(
           context: context,
           builder: (context) {
@@ -70,31 +113,6 @@ class _LoginScreenState extends State<LoginScreen> {
               content: Text(responseData.message),
             );
           });
-    } else if (responseData.status == 'Success') {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-
-      await prefs.setString('customerEmail', emailcontroller.text);
-      await prefs.setString('customerName', customerName);
-      await prefs.setString('customerId', customerId);
-      await prefs.setString('customerEmail', customerEmail);
-      await prefs.setString('customerPhone', customerPhone);
-      await prefs.setString('accountBalance', accountBalance);
-      await prefs.setString('customerAddress1', customerAddress1);
-      await prefs.setString('customerAddress2', customerAddress2);
-      await prefs.setString('customerAddress3', customerAddress3);
-      await prefs.setString('token', responseData.authToken);
-      String? tokenFromSP = prefs.getString('token');
-
-      print(accountBalance);
-      print(customerPhone);
-      print('responseData.authToken: ' + responseData.authToken);
-      print('token from sp: ' + tokenFromSP!);
-
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => DashBoard()));
     }
   }
 
@@ -222,6 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     TextFormField(
                                       controller: passwordcontroller,
+                                      obscureText: _obscureText,
                                       autofocus: false,
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(),
@@ -230,17 +249,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                           padding: EdgeInsets.only(top: 0),
                                           child: Icon(Icons.lock),
                                         ),
-                                        suffixIcon: IconButton(
-                                          icon: Icon(
+                                        suffixIcon: InkWell(
+                                          onTap: _toggle,
+                                          child: Icon(
                                             _obscureText
                                                 ? Icons.visibility
                                                 : Icons.visibility_off,
                                           ),
-                                          onPressed: () {
-                                            setState(() {
-                                              _obscureText = !_obscureText;
-                                            });
-                                          },
                                         ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: const BorderSide(
@@ -249,7 +264,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               BorderRadius.circular(10),
                                         ),
                                       ),
-                                      obscureText: true,
+
                                       // validator: (value) {
                                       //   if (value == null || value.isEmpty) {
                                       //     return 'Field is required.';

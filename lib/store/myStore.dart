@@ -1,14 +1,20 @@
 // ignore: file_names
 // ignore_for_file: prefer_final_fields, prefer_is_empty
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:sales_order/Model/item.dart';
 // import '../Model/Products.dart';
 import 'package:sales_order/Model/products.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class MyStore extends ChangeNotifier {
-  List<Product> _products = [];
+  List<Datum> _products = [];
   List<Product> _baskets = [];
   Product _activeProduct = Product();
+  String? _token;
 
 //constructor to initialize the variables
   // MyStore() {
@@ -74,12 +80,50 @@ class MyStore extends ChangeNotifier {
   // }
 
   //create getter function
-  List<Product> get products => _products;
+  List<Datum> get products => _products;
   List<Product> get baskets => _baskets;
   Product? get activeProduct => _activeProduct;
 
   setActiveProduct(Product p) {
     _activeProduct = p;
+
+    notifyListeners();
+  }
+
+  Future<String?> _getToken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    _token = prefs.getString('token');
+  }
+
+  Future<List<Datum>> callApi() async {
+    await _getToken();
+    final response = await http.get(
+        Uri.parse('http://powersoftrd.com/PEMAPI/api/GetInventoryItems/741258'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $_token',
+        });
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    print('token : $_token');
+
+    if (response.statusCode == 200) {
+      final result = json.decode(response.body);
+      // final itemModels = result["data"];
+      var itemModel = ItemModel.fromJson(result);
+      return itemModel.data;
+      // return ItemModels.map((e) => ItemModelFromJson(e)).toList();
+
+    } else {
+      throw Exception('Request API Error');
+    }
+
+    notifyListeners();
+  }
+
+  setProductCatalogViewable(var p) {
+    _products = [...p];
 
     notifyListeners();
   }

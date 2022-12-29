@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, must_call_super
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,8 +6,6 @@ import 'package:intl/intl.dart';
 import '../Store/MyStore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'basketPage.dart';
-
-import 'package:sqflite/sqflite.dart';
 import 'package:sales_order/Model/products.dart';
 
 class ProductDetailpage extends StatefulWidget {
@@ -228,8 +226,19 @@ class _ProductDetailpageState extends State<ProductDetailpage> {
                       45,
                     )),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => BasketPage()));
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      // title: const Text('AlertDialog Title'),
+                      content: const Text('Cart Updated'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'ok'),
+                          child: const Text('ok'),
+                        ),
+                      ],
+                    ),
+                  );
                 },
                 child: Text('Add To Cart'),
               ),
@@ -247,9 +256,11 @@ class _ProductDetailpageState extends State<ProductDetailpage> {
                     45,
                   ),
                 ),
-                onPressed: () {},
-                //Navigate to the checkout page
-                child: Text('Place Order'),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => BasketPage()));
+                },
+                child: Text('View Cart'),
               ),
               SizedBox(
                 height: 10,

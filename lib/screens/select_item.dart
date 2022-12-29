@@ -1,14 +1,14 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, body_might_complete_normally_nullable, avoid_print
 
-import 'dart:convert';
+// import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sales_order/Model/products.dart';
-import 'package:sales_order/Screens/login_screen.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'package:sales_order/screens/profileScreen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../Store/MyStore.dart';
+import 'package:sales_order/store/myStore.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+// import '../Store/MyStore.dart';
 import '../Screens/ProductDetailPage.dart';
 import '../Screens/basketPage.dart';
 import '../Screens/dashboard.dart';
@@ -22,60 +22,31 @@ class SelectItemScreen extends StatefulWidget {
 }
 
 class _SelectItemScreenState extends State<SelectItemScreen> {
-  // ignore: prefer_final_fields
-  TextEditingController txtQuery = new TextEditingController();
+  TextEditingController txtQuery = TextEditingController();
 
   var itemId;
+  var data;
+  var productLists = [];
   late int minimumQty;
   late String itemName;
   late double price;
   late String pictureurl;
   late String itemFamilyId;
-  String? token;
 
   Future<List<Datum>> productListAPIResult =
       Future.value(List<Datum>.from([Datum()]));
 
   @override
   void initState() {
-    productListAPIResult = callApi();
+    productListAPIResult = Provider.of<MyStore>(context).callApi();
     super.initState();
-  }
-
-  Future<String?> getToken() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString('token');
-  }
-
-  Future<List<Datum>> callApi() async {
-    await getToken();
-    final response = await http.get(
-        Uri.parse('http://powersoftrd.com/PEMAPI/api/GetInventoryItems/741258'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $token',
-        });
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
-    print('token : ${token}');
-
-    if (response.statusCode == 200) {
-      final result = json.decode(response.body);
-      // final itemModels = result["data"];
-      var itemModel = ItemModel.fromJson(result);
-      return itemModel.data;
-      // return ItemModels.map((e) => ItemModelFromJson(e)).toList();
-
-    } else {
-      throw Exception('Failed to load data');
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     //register for thr listener to listen for any notifications
     var store = Provider.of<MyStore>(context);
+    var dataCopy;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -91,7 +62,38 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
               color: Colors.blue[50],
             ),
             child: TextField(
-              // onChanged: search,
+              onChanged: (text) {
+                _getProductList();
+                // print(productLists.length.toString());
+                // print('Nos of Items in product list: ${data.length}');
+                // var dataCopy = [];
+                // for (var product in productLists) {
+                //   final prod = product is Datum ? product : Datum();
+                //   print(
+                //       'product is ${product.ItemName}; prod is ${prod.ItemName}');
+                //   var pattern = RegExp('($text)+?', caseSensitive: false);
+                //   bool myResult = pattern.hasMatch(prod.ItemName);
+                //   print(
+                //       'Product name is: ${prod.ItemName}, hasMatch value is: $myResult');
+                //   if (myResult) {
+                //     dataCopy.add(prod);
+                //   }
+                //   // print('Nos of Items in data: ${data.length}');
+                // }
+                // setState(() {
+                //   dataCopy = productLists.where((product) {
+                //     final prod = product is Datum ? product : Datum();
+                //     var pattern = RegExp('($text)+?', caseSensitive: false);
+                //     bool myResult = pattern.hasMatch(prod.ItemName);
+                //     print(
+                //         'Product name is: ${prod.ItemName}, hasMatch value is: $myResult');
+                //     return myResult;
+                //   });
+                // });
+
+                store.setProductCatalogViewable(dataCopy);
+                print('Nos of Items in data: ${data.length}');
+              },
               controller: txtQuery,
               decoration: InputDecoration(
                 border: InputBorder.none,
@@ -193,7 +195,8 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
       body: FutureBuilder<List<Datum>>(
         future: productListAPIResult,
         builder: (context, snapshot) {
-          var data = snapshot.data;
+          // store.setProductCatalogViewable(snapshot.data);
+          data = store.products;
           if (snapshot.hasData) {
             return ListView.builder(
               itemCount: data!.length,
@@ -236,7 +239,7 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
               },
             );
           } else {
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           }
         },
       ),
@@ -256,5 +259,9 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
     }
 
     return 0; // if basket is empty return 0
+  }
+
+  _getProductList() async {
+    productLists = await productListAPIResult;
   }
 }
