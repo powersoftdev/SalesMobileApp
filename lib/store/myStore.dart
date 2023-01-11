@@ -8,6 +8,7 @@ class MyStore extends ChangeNotifier {
   List<Product> _products = [];
   List<Product> _baskets = [];
   Product _activeProduct = Product();
+  Product _allProduct = Product();
 
 //constructor to initialize the variables
   MyStore() {
@@ -76,9 +77,14 @@ class MyStore extends ChangeNotifier {
   List<Product> get products => _products;
   List<Product> get baskets => _baskets;
   Product? get activeProduct => _activeProduct;
+  Product? get allProduct => _allProduct;
 
   setActiveProduct(Product p) {
     _activeProduct = p;
+  }
+
+  setAllProduct(Product v) {
+    _allProduct = v;
   }
 
   increaseItemQuantity(int? quantity, Product p) {
@@ -128,6 +134,32 @@ class MyStore extends ChangeNotifier {
     notifyListeners();
   }
 
+  // addAllItemInBasket(int? quantity, Product p) {
+  //   if (_baskets.length > 0) {
+  //     var foundItem =
+  //         _baskets.firstWhere((a) => a.id == p.id, orElse: () => Product());
+
+  //     Product allItem = Product();
+
+  //     if (foundItem.id != null) {
+  //       allItem = _baskets.firstWhere((a) => a.id == p.id);
+  //     }
+  //     if (allItem.id != null) {
+  //       allItem.qty = allItem.qty == null ? 0 : quantity!;
+  //       allItem.totalPrice = allItem.qty! * allItem.price!;
+  //     } else {
+  //       p.qty = p.qty == null ? 0 : quantity!;
+  //       p.totalPrice = p.qty! + p.price!;
+  //       _baskets.add(p);
+  //     }
+  //   } else {
+  //     p.qty = p.qty == null ? 0 : quantity!;
+  //     p.totalPrice = p.qty! + p.price!;
+  //     _baskets.add(p);
+  //   }
+  //   notifyListeners();
+  // }
+
   removeOneItemFromBasket(Product p) {
     if (_baskets.length > 0) {
       var foundItem =
@@ -152,6 +184,30 @@ class MyStore extends ChangeNotifier {
     notifyListeners();
   }
 
+  addAllItemToBasket(Product v) {
+    if (_baskets.length > 0) {
+      var foundItem =
+          _baskets.firstWhere((a) => a.id == v.id, orElse: () => Product());
+
+      Product allItem = Product();
+
+      if (foundItem.id != null) {
+        allItem = _baskets.firstWhere((a) => a.id == v.id);
+      }
+      if (allItem.id != null) {
+       if (allItem.qty! >= 0 && allItem.id != null) {
+          // allItem.qty = allItem.qty! + 1;
+          allItem.totalPrice = allItem.qty! + allItem.price!;
+        } else {
+          _baskets.add(v);
+        }
+      } else {
+        _baskets.add(v);
+      }
+    }
+    notifyListeners();
+  }
+
   getBasketQty() {
     int total = 0;
     for (int i = 0; i < baskets.length; i++) {
@@ -159,4 +215,6 @@ class MyStore extends ChangeNotifier {
     }
     return total;
   }
+
+  
 }
