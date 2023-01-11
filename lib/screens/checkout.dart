@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
-import 'package:provider/provider.dart';
-import 'package:sales_order/Payment/paystackpayment.dart';
-import 'package:sales_order/Store/MyStore.dart';
-
 
 import 'package:sales_order/screens/size_config.dart';
+
+
+
 import 'dashboard.dart';
 import 'select_item.dart';
 
