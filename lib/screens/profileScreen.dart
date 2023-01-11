@@ -1,9 +1,8 @@
-import 'dart:math';
+// ignore_for_file: prefer_const_constructors, camel_case_types, must_call_super, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:sales_order/Screens/basketPage.dart';
 import 'package:sales_order/Screens/dashboard.dart';
-
 import 'package:sales_order/Screens/select_item.dart';
 import 'package:sales_order/Store/MyStore.dart';
 import 'package:provider/provider.dart';
@@ -22,21 +21,34 @@ class _profileScreenState extends State<profileScreen> {
   final customerNamecontroller = TextEditingController();
   final customerIdcontroller = TextEditingController();
   final customerEmailcontroller = TextEditingController();
-  final customerPhonecontroller = TextEditingController();
   final accountBalancecontroller = TextEditingController();
+  final customerAddress1controller = TextEditingController();
+  final customerAddress2controller = TextEditingController();
+  final customerAddress3controller = TextEditingController();
+  final customerCitycontroller = TextEditingController();
+  final customerStatecontroller = TextEditingController();
+  final customerCountrycontroller = TextEditingController();
+  final customerPhonecontroller = TextEditingController();
+  final customerTypeIdcontroller = TextEditingController();
 
   dynamic customerName;
   dynamic customerId;
   dynamic customerEmail;
+  double accountBalance = 0;
+  dynamic customerAddress1;
+  dynamic customerAddress2;
+  dynamic customerAddress3;
+  dynamic customerCity;
+  dynamic customerState;
+  dynamic customerCountry;
   dynamic customerPhone;
-  dynamic accountBalance;
+  dynamic customerTypeId;
 
   late final SharedPreferences _prefs;
 
   @override
   void initState() {
     getStringValuesSF();
-    super.initState();
   }
 
   getStringValuesSF() async {
@@ -45,8 +57,15 @@ class _profileScreenState extends State<profileScreen> {
       customerName = _prefs.getString('customerName') ?? "";
       customerId = _prefs.getString('customerId') ?? "";
       customerEmail = _prefs.getString('customerEmail') ?? "";
+      accountBalance = _prefs.getDouble('accountBalance') ?? 0;
+      customerAddress1 = _prefs.getString('customerAddress1') ?? "";
+      customerAddress2 = _prefs.getString('customerAddress2') ?? "";
+      customerAddress3 = _prefs.getString('customerAddress3') ?? "";
+      customerCity = _prefs.getString('customerCity') ?? "";
+      customerState = _prefs.getString('customerState') ?? "";
+      customerCountry = _prefs.getString('customerCountry') ?? "";
       customerPhone = _prefs.getString('customerPhone') ?? "";
-      accountBalance = _prefs.getString('accountBalance') ?? "";
+      customerTypeId = _prefs.getString('customerTypeId') ?? "";
     });
     return;
   }
@@ -301,49 +320,72 @@ class _profileScreenState extends State<profileScreen> {
                       border: const OutlineInputBorder(),
                       labelText: 'Account Balance',
                       enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 2, color: Colors.blueAccent),
+                        borderSide: const BorderSide(
+                            width: 2, color: Colors.blueAccent),
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
                     controller: accountBalancecontroller
-                      ..text = '$accountBalance',
+                      ..text = '$accountBalance'.toString(),
                   ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  TextFormField(
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(left: 20),
+                        fillColor: Colors.white,
+                        filled: true,
+                        border: const OutlineInputBorder(),
+                        labelText: 'Customer Type',
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 2, color: Colors.blueAccent),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      controller: customerTypeIdcontroller
+                        ..text = '$customerTypeId'),
                   SizedBox(
                     height: 30,
                   ),
                   TextFormField(
+                    maxLines: null,
                     readOnly: true,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 20),
                       fillColor: Colors.white,
                       filled: true,
                       border: const OutlineInputBorder(),
-                      labelText: 'Customer Type',
-                      hintText: 'Customer Type',
+                      labelText: 'Address',
                       enabledBorder: OutlineInputBorder(
                         borderSide:
                             BorderSide(width: 2, color: Colors.blueAccent),
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
+                    controller: customerAddress1controller
+                      ..text = '$customerAddress1'
+                          ','
+                          ' '
+                          '$customerAddress2'
+                          ','
+                          ' '
+                          '$customerAddress3'
+                          '.'
+                          ' '
+                          '$customerCity'
+                          ','
+                          ' '
+                          '$customerState'
+                          ','
+                          ' '
+                          '$customerCountry'
+                          '.',
                   ),
                   SizedBox(
                     height: 30,
-                  ),
-                  const TextField(
-                    maxLines: 5,
-                    readOnly: true,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(left: 20),
-                        fillColor: Colors.white,
-                        filled: true,
-                        border: const OutlineInputBorder(),
-                        labelText: 'Address',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 2, color: Colors.blueAccent),
-                        )),
                   ),
                 ],
               ),

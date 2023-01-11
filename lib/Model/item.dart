@@ -2,6 +2,8 @@
 //
 //     final ItemModel = ItemModelFromJson(jsonString);
 
+// ignore_for_file: non_constant_identifier_names, prefer_if_null_operators, prefer_null_aware_operators
+
 import 'dart:convert';
 
 ItemModel ItemModelFromJson(String str) => ItemModel.fromJson(json.decode(str));

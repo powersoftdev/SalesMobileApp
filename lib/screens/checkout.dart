@@ -4,8 +4,6 @@ import 'package:flutter_animated_button/flutter_animated_button.dart';
 
 import 'package:sales_order/screens/size_config.dart';
 
-
-
 import 'dashboard.dart';
 import 'select_item.dart';
 
@@ -29,136 +27,158 @@ Future<void> showInformationDialog(BuildContext context) async {
           //  SizeConfig().init(context);
           return Center(
             child: AlertDialog(
-                title: const Text('Address Information'),
-                scrollable: true,
-                content: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        // mainAxisSize: MainAxisSize.max,
+              title: const Text('Address Information'),
+              scrollable: true,
+              content: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      // mainAxisSize: MainAxisSize.max,
 
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: TextFormField(
-                              autofocus: false,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'First Name',
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.only(top: 0),
-                                  child: Icon(Icons.account_box),
-                                ),
-                              ),
-                              validator: (value) {
-                                return value!.isNotEmpty
-                                    ? null
-                                    : 'Invalid field First Name';
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: TextFormField(
-                              autofocus: false,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Last Name',
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.only(top: 0),
-                                  child: Icon(Icons.account_box),
-                                ),
-                              ),
-                              validator: (value) {
-                                return value!.isNotEmpty
-                                    ? null
-                                    : 'Invalid field Last Name';
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: TextFormField(
-                              autofocus: false,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Country/Region',
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.only(top: 0),
-                                  child: Icon(Icons.flag),
-                                ),
-                              ),
-                              validator: (value) {
-                                return value!.isNotEmpty
-                                    ? null
-                                    : 'Invalid field Country/Region';
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: TextFormField(
-                              autofocus: false,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Address',
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.only(top: 0),
-                                  child: Icon(Icons.location_city_outlined),
-                                ),
-                              ),
-                              validator: (value) {
-                                return value!.isNotEmpty
-                                    ? null
-                                    : 'Invalid field Address';
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: TextFormField(
-                              autofocus: false,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'City',
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.only(top: 0),
-                                  child: Icon(Icons.location_city_sharp),
-                                ),
-                              ),
-                              validator: (value) {
-                                return value!.isNotEmpty
-                                    ? null
-                                    : 'Invalid field City';
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: TextFormField(
-                              autofocus: false,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'State',
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.only(top: 0),
-                                  child: Icon(Icons.satellite_alt_outlined),
-                                ),
-                              ),
-                              validator: (value) {
-                                return value!.isNotEmpty
-                                    ? null
-                                    : 'Invalid field State';
-                              },
-                            ),
-                          ),
-                          TextFormField(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: TextFormField(
                             autofocus: false,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              hintText: 'Postal Code',
+                              hintText: 'First Name',
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.only(top: 0),
+                                child: Icon(Icons.account_box),
+                              ),
+                            ),
+                            validator: (value) {
+                              return value!.isNotEmpty
+                                  ? null
+                                  : 'Invalid field First Name';
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: TextFormField(
+                            autofocus: false,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Last Name',
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.only(top: 0),
+                                child: Icon(Icons.account_box),
+                              ),
+                            ),
+                            validator: (value) {
+                              return value!.isNotEmpty
+                                  ? null
+                                  : 'Invalid field Last Name';
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: TextFormField(
+                            autofocus: false,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Country/Region',
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.only(top: 0),
+                                child: Icon(Icons.flag),
+                              ),
+                            ),
+                            validator: (value) {
+                              return value!.isNotEmpty
+                                  ? null
+                                  : 'Invalid field Country/Region';
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: TextFormField(
+                            autofocus: false,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Address',
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.only(top: 0),
+                                child: Icon(Icons.location_city_outlined),
+                              ),
+                            ),
+                            validator: (value) {
+                              return value!.isNotEmpty
+                                  ? null
+                                  : 'Invalid field Address';
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: TextFormField(
+                            autofocus: false,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'City',
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.only(top: 0),
+                                child: Icon(Icons.location_city_sharp),
+                              ),
+                            ),
+                            validator: (value) {
+                              return value!.isNotEmpty
+                                  ? null
+                                  : 'Invalid field City';
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: TextFormField(
+                            autofocus: false,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'State',
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.only(top: 0),
+                                child: Icon(Icons.satellite_alt_outlined),
+                              ),
+                            ),
+                            validator: (value) {
+                              return value!.isNotEmpty
+                                  ? null
+                                  : 'Invalid field State';
+                            },
+                          ),
+                        ),
+                        TextFormField(
+                          autofocus: false,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Postal Code',
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.only(top: 0),
+                              child: Icon(Icons.add_call),
+                            ),
+                          ),
+                          validator: (value) {
+                            return value!.isNotEmpty
+                                ? null
+                                : 'Invalid field Postal Code';
+                          },
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: TextFormField(
+                            autofocus: false,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Phone (optional)',
                               prefixIcon: Padding(
                                 padding: EdgeInsets.only(top: 0),
                                 child: Icon(Icons.add_call),
@@ -167,66 +187,44 @@ Future<void> showInformationDialog(BuildContext context) async {
                             validator: (value) {
                               return value!.isNotEmpty
                                   ? null
-                                  : 'Invalid field Postal Code';
+                                  : 'Invalid field Phone';
                             },
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: TextFormField(
-                              autofocus: false,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Phone (optional)',
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.only(top: 0),
-                                  child: Icon(Icons.add_call),
-                                ),
-                              ),
-                              validator: (value) {
-                                return value!.isNotEmpty
-                                    ? null
-                                    : 'Invalid field Phone';
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        Navigator.of(context).pop();
-                      }
-                    },
-                    child: const Text(
-                      'Save Address',
-                      style: TextStyle(fontSize: 20, color: Colors.green),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Checkout(),
                         ),
-                      );
-                    },
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(fontSize: 20, color: Colors.red),
+                      ],
                     ),
                   ),
                 ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: const Text(
+                    'Save Address',
+                    style: TextStyle(fontSize: 20, color: Colors.green),
+                  ),
                 ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Checkout(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(fontSize: 20, color: Colors.red),
+                  ),
+                ),
+              ],
+            ),
           );
         });
       });
@@ -380,10 +378,12 @@ class _CheckoutState extends State<Checkout> {
                                     child: Text('Delivery Type:'),
                                   ),
                                   dropdownColor: Colors.white,
-                                  icon: const Icon(Icons.arrow_drop_down,color: Colors.blue,
+                                  icon: const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.blue,
                                   ),
                                   iconSize: 36,
-                                  
+
                                   isExpanded: true,
                                   underline: const SizedBox(),
                                   style: const TextStyle(
@@ -522,7 +522,7 @@ class _CheckoutState extends State<Checkout> {
                           color: Colors.white,
                         ),
                         onPress: () {
-                          if (PaymentOption.payOffline == _value ) {
+                          if (PaymentOption.payOffline == _value) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -530,7 +530,7 @@ class _CheckoutState extends State<Checkout> {
                               ),
                             );
                           } else {
-                              Navigator.push(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => const DashBoard(),
@@ -545,7 +545,6 @@ class _CheckoutState extends State<Checkout> {
                             colors: [Colors.blue, Colors.blueGrey]),
                         selectedTextColor: Colors.black,
                         transitionType: TransitionType.LEFT_BOTTOM_ROUNDER,
-
                         isReverse: true,
                         borderColor: Colors.white,
                         borderRadius: 45,

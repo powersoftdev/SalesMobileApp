@@ -129,7 +129,7 @@ class _BasketPageState extends State<BasketPage> {
                   // ignore: sized_box_for_whitespace
                   Container(
                     height: 30,
-                    child: Text("Order Date :$pickeddate"),
+                    child: Text("Shipping Date :$pickeddate"),
                   ),
                   Container(
                     height: 40,

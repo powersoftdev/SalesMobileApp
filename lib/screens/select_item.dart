@@ -1,10 +1,9 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, body_might_complete_normally_nullable, avoid_print, unnecessary_brace_in_string_interps
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sales_order/Model/products.dart';
-import 'package:sales_order/Screens/login_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:sales_order/screens/profileScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,7 +22,7 @@ class SelectItemScreen extends StatefulWidget {
 
 class _SelectItemScreenState extends State<SelectItemScreen> {
   // ignore: prefer_final_fields
-  TextEditingController txtQuery = new TextEditingController();
+  TextEditingController txtQuery = TextEditingController();
 
   var itemId;
   late int minimumQty;
@@ -236,7 +235,7 @@ class _SelectItemScreenState extends State<SelectItemScreen> {
               },
             );
           } else {
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           }
         },
       ),
